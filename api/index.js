@@ -10,7 +10,7 @@ app.get('/test', (req, res) => {
 const axios = require('axios')
 const iconv = require('iconv-lite')
 
-const TELEGRAM_API_KEY = require('./config.json').TELEGRAM_API_KEY
+const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY || require('./config.json').TELEGRAM_API_KEY
 
 const getJoke = async type => {
 	const response = await axios.get(`http://rzhunemogu.ru/RandJSON.aspx?CType=${type}`, {
