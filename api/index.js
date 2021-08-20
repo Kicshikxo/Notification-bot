@@ -1,49 +1,56 @@
 const express = require('express')
 const app = express()
 
-app.get('/test', (req, res) => {
-	res.json({
-		success: true
-	})
-})
+const telegramDB = require('./telegramDbController')
+const discordDB = require('./discordDbController')
+const telegramBot = require('./telegramBot')
+const discordBot = require('./discordBot')
 
-const axios = require('axios')
-const iconv = require('iconv-lite')
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
-const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY || require('./config.json').TELEGRAM_API_KEY
+app.post('/dispatch', async (req, res) => {
+	const { message, discord, telegram } = req.body
 
-const getJoke = async type => {
-	const response = await axios.get(`http://rzhunemogu.ru/RandJSON.aspx?CType=${type}`, {
-		responseType: 'arraybuffer',
-		responseEncoding: 'binary'
-	})
-	const content = iconv.decode(Buffer.from(response.data), 'windows-1251').slice(12, -2)
-	return content
-}
-
-const TelegramBot = require('node-telegram-bot-api')
-
-const bot = new TelegramBot(TELEGRAM_API_KEY, {
-	polling: true
-})
-
-bot.setMyCommands([
-	{
-		command: '/start',
-		description: 'Стартовая команда'
-	},
-	{
-		command: '/anek',
-		description: 'Получить анекдот'
+	if (!message.trim() || (!discord && !telegram)) {
+		return res.json({ success: false })
 	}
-])
 
-bot.onText(/\/start/, async message => {
-	await bot.sendMessage(message.chat.id, 'Напиши /anek чтобы получить анекдот')
+	if (discord) {
+		const discordChannels = await discordDB.getChannels()
+		discordChannels.forEach(channel => discordBot.channels.cache.get(channel.channelId).send(message))
+	}
+
+	if (telegram) {
+		const telegramUsers = await telegramDB.getUsers()
+		telegramUsers.forEach(user => telegramBot.sendMessage(user.chatId, message))
+	}
+
+	res.json({ success: true })
 })
 
-bot.onText(/\/anek/, async message => {
-	await bot.sendMessage(message.chat.id, await getJoke(1))
+telegramBot.onText(/\/start/, async message => {
+	await telegramBot.sendMessage(message.chat.id, 'Для подписки на рассылку введите /subscribe')
+})
+
+telegramBot.onText(/\/subscribe/, async message => {
+	const result = await telegramDB.subscribe(message)
+	await telegramBot.sendMessage(message.chat.id, result.success ? 'Вы подписались на рассылку' : 'Вы уже подписаны на рассылку')
+})
+
+telegramBot.onText(/\/unsubscribe/, async message => {
+	const result = await telegramDB.unsubscribe(message)
+	await telegramBot.sendMessage(message.chat.id, result.success ? 'Вы отписались от рассылки' : 'Вы не подписаны на рассылку')
+})
+
+discordBot.commands.set('/subscribe', async message => {
+	const result = await discordDB.subscribe(message)
+	return message.reply(result.success ? 'Вы подписались на рассылку' : 'Вы уже подписаны на рассылку')
+})
+
+discordBot.commands.set('/unsubscribe', async message => {
+	const result = await discordDB.unsubscribe(message)
+	return message.reply(result.success ? 'Вы отписались от рассылки' : 'Вы не подписаны на рассылку')
 })
 
 module.exports = app

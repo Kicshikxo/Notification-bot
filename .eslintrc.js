@@ -19,6 +19,7 @@ module.exports = {
 		'vue/html-quotes': ['error', 'single', { avoidEscape: true }],
 		'newline-per-chained-call': 'off',
 		'array-bracket-newline': 'off',
+		'no-useless-return': 'off',
 		'vue/html-indent': [
 			'error',
 			'tab',
