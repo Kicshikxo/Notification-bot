@@ -11,6 +11,9 @@
 		"lint": "yarn lint:js",
 		"lint:js": "eslint --ext .js,.vue --ignore-path .gitignore ."
 	},
+	"engines": {
+		"node": "16.6.2"
+	},
 	"dependencies": {
 		"@nuxt/http": "latest",
 		"discord.js": "^13.0.0",
