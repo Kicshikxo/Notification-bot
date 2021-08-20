@@ -13,7 +13,7 @@
 	},
 	"dependencies": {
 		"@nuxt/http": "latest",
-		"discord.js": "^13.1.0",
+		"discord.js": "^13.0.0",
 		"express": "latest",
 		"monk": "^7.3.4",
 		"node-telegram-bot-api": "^0.54.0",
