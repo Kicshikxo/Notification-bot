@@ -16,22 +16,19 @@ app.post('/dispatch', async (req, res) => {
 		return res.json({ success: false })
 	}
 
-	if (discord) {
-		const discordChannels = await discordDB.getChannels()
-		try {
+	try {
+		if (discord) {
+			const discordChannels = await discordDB.getChannels()
 			discordChannels.forEach(channel => discordBot.channels.cache.get(channel.channelId).send(message))
-		} catch (e) {
-			console.log(e)
 		}
-	}
 
-	if (telegram) {
-		const telegramUsers = await telegramDB.getUsers()
-		try {
+		if (telegram) {
+			const telegramUsers = await telegramDB.getUsers()
 			telegramUsers.forEach(user => telegramBot.sendMessage(user.chatId, message))
-		} catch (e) {
-			console.log(e)
 		}
+	} catch (e) {
+		console.log(e)
+		return res.json({ success: false })
 	}
 
 	res.json({ success: true })
