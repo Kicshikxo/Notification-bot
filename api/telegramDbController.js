@@ -35,6 +35,16 @@ class TelegramDatabaseController {
 		}
 	}
 
+	async forceUnsubscribe(id) {
+		try {
+			await channels.remove({ id })
+			return { success: true }
+		} catch (e) {
+			console.error(e)
+			return { success: false }
+		}
+	}
+
 	async getUsers() {
 		return await users.find({}, { sort: { subscribeDate: -1 } })
 	}

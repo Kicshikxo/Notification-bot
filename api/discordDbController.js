@@ -35,6 +35,16 @@ class DiscordDatabaseController {
 		}
 	}
 
+	async forceUnsubscribe(guildId) {
+		try {
+			await channels.remove({ guildId })
+			return { success: true }
+		} catch (e) {
+			console.error(e)
+			return { success: false }
+		}
+	}
+
 	async getChannels() {
 		return await channels.find({}, { sort: { subscribeDate: -1 } })
 	}
