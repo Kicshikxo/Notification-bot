@@ -13,9 +13,9 @@ app.post('/dispatch', async (req, res) => {
 	const { message, discord, telegram } = req.body
 
 	if (!message.trim()) {
-		return res.json({ success: false, error: 'MESSAGE_MUST_BE_NOT_EMPTY' })
+		return res.json({ success: false, error: new Error('MESSAGE_MUST_BE_NOT_EMPTY') })
 	} else if (!discord && !telegram) {
-		return res.json({ success: false, error: 'NO_NOTIFICATION_TARGETS_SPECIFIED' })
+		return res.json({ success: false, error: new Error('NO_NOTIFICATION_TARGETS_SPECIFIED') })
 	}
 
 	try {
