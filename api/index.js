@@ -57,13 +57,17 @@ app.get('/channels', async (req, res) => {
 	const channels = []
 
 	for (const channel of await discordDB.getChannels()) {
-		const guild = await discordBot.guilds.cache.get(channel.guildId)
-		channels.push({
-			id: guild.id,
-			name: guild.name,
-			iconLink: guild.iconURL() || `/img/${((guild.id >>> 0) % 3) + 1}.png`,
-			subscribeDate: channel.subscribeDate
-		})
+		try {
+			const guild = await discordBot.guilds.cache.get(channel.guildId)
+			channels.push({
+				id: guild.id,
+				name: guild.name,
+				iconLink: guild.iconURL() || `/img/${((guild.id >>> 0) % 3) + 1}.png`,
+				subscribeDate: channel.subscribeDate
+			})
+		} catch (e) {
+			console.log(e)
+		}
 	}
 
 	res.json({ channels })
