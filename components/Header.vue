@@ -3,7 +3,7 @@
 		<h3 class='my-0 mr-md-auto'>
 			Панель уведомлений
 		</h3>
-		<nav class='my-2 my-md-0 mr-md-3'>
+		<nav class='my-md-0 mr-md-3'>
 			<button v-if='buttonText' class='btn btn-primary mt-1' @click="$emit('click')">
 				{{ buttonText }}
 			</button>
