@@ -15,7 +15,7 @@
 						</div>
 						<div v-for='channel in discordChallensList' :key='channel.id' class='row my-1 pt-1 discord-server'>
 							<div class='col-auto d-flex justify-content-end'>
-								<img :src='channel.iconLink' alt='icon' class='discord-server-icon'>
+								<img :src='channel.iconLink' draggable='false' alt='icon' class='discord-server-icon'>
 							</div>
 							<div class='col discord-server-info'>
 								<div class='discord-server-name h-50 pt-1'>
@@ -41,7 +41,7 @@
 						</div>
 						<div v-for='user in telegramUsersList' :key='user.id' class='row my-1 pt-1 telegram-user'>
 							<div class='col-auto d-flex justify-content-end'>
-								<img :src='user.avatarLink' alt='avatar' class='telegram-user-avatar'>
+								<img :src='user.avatarLink' draggable='false' alt='avatar' class='telegram-user-avatar'>
 							</div>
 							<div class='col telegram-user-info'>
 								<div class='telegram-user-name h-50 pt-1'>
@@ -79,13 +79,13 @@ export default {
 				html: `
 					<div class='input-group d-flex justify-content-center'>
 						<label class='input-group-text d-flex flex-column bg-transparent'>
-							<img src='/img/discord.svg' width='40' height='40' class='m-2'>
+							<img class='discord-image m-2'>
 							<div class='form-check form-switch'>
 								<input id='discord-checkbox' class='form-check-input' type='checkbox' checked>
 							</div>
 						</label>
 						<label class='input-group-text d-flex flex-column bg-transparent'>
-							<img src='/img/telegram.svg' width='40' height='40' class='m-2'>
+							<img class='telegram-image m-2'>
 							<div class='form-check form-switch'>
 								<input id='telegram-checkbox' class='form-check-input' type='checkbox' checked>
 							</div>
