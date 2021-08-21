@@ -62,13 +62,11 @@ telegramBot.onText(/\/unsubscribe/, async message => {
 
 discordBot.commands.set('/subscribe', async message => {
 	const result = await discordDB.subscribe(message)
-	console.log(message.member.permissions)
 	return message.reply(result.success ? 'Вы подписались на рассылку' : result.error.message === 'ALREADY_SUBSCRIBED' ? 'Вы уже подписаны на рассылку' : 'Произошла незивестная ошибка')
 })
 
 discordBot.commands.set('/unsubscribe', async message => {
 	const result = await discordDB.unsubscribe(message)
-	console.log(message.member.permissions)
 	return message.reply(result.success ? 'Вы отписались от рассылки' : result.error.message === 'NOT_SUBSCRIBED' ? 'Вы не подписаны на рассылку' : 'Произошла неизвестная ошибка')
 })
 

@@ -6,7 +6,7 @@ const client = new Client({ intents })
 client.commands = new Collection()
 
 client.on('messageCreate', message => {
-	if (!message.content.startsWith('/') || message.author.bot || !message.member.permissions.has('ADMINISTRATOR')) {
+	if (!message.content.startsWith('/') || message.author.bot || message.member.permissions.has('ADMINISTRATOR')) {
 		return
 	}
 	// console.log(message)
