@@ -80,8 +80,8 @@ export default {
 					<div class='input-group d-flex justify-content-center'>
 						<label class='input-group-text d-flex flex-column bg-transparent'>
 							<img src='/img/discord.svg' width='40' height='40' class='m-2'>
-							<div id='discord-checkbox' class='form-check form-switch'>
-								<input id='telegram-checkbox' class='form-check-input' type='checkbox' checked>
+							<div class='form-check form-switch'>
+								<input id='discord-checkbox' class='form-check-input' type='checkbox' checked>
 							</div>
 						</label>
 						<label class='input-group-text d-flex flex-column bg-transparent'>
