@@ -135,7 +135,7 @@ export default {
 	white-space: nowrap;
 	overflow: auto;
 	overflow-y: none;
-	max-height: 580px;
+	max-height: 569px;
 }
 
 .telegram-user,
@@ -183,7 +183,7 @@ export default {
 @media (max-width: 991px) {
 	.telegram-users-list,
 	.discord-servers-list {
-		max-height: 435px;
+		max-height: 420px;
 	}
 }
 </style>
