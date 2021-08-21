@@ -174,6 +174,9 @@ export default {
 	.total-items-amount {
 		display: none;
 	}
+	.header {
+		flex-direction: column;
+	}
 }
 
 @media (max-width: 991px) {
