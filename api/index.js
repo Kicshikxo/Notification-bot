@@ -31,7 +31,7 @@ app.post('/dispatch', async (req, res) => {
 
 		return res.json({ success: true })
 	} catch (e) {
-		console.log(e)
+		console.error(e)
 		return res.json({ success: false, error: e })
 	}
 })
