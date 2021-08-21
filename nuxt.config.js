@@ -16,7 +16,7 @@ export default {
 		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
 	},
 
-	css: ['@/assets/css/bootstrap.5.0.2.min.css'],
+	css: ['@/assets/css/bootstrap.5.0.2.min.css', '@/assets/css/base.css'],
 
 	plugins: [
 		{ src: '~/plugins/api.server.js', mode: 'server' },

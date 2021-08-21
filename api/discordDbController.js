@@ -36,7 +36,7 @@ class DiscordDatabaseController {
 	}
 
 	async getChannels() {
-		return await channels.find()
+		return await channels.find({}, { sort: { subscribeDate: -1 } })
 	}
 }
 

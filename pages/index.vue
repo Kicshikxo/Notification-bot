@@ -1,15 +1,72 @@
 <template>
-	<div class='container d-flex justify-content-center align-items-center'>
-		<div>
-			<button class='btn btn-primary' @click='openNotificationMenu'>
-				Открыть меню
-			</button>
+	<div>
+		<Header button-text='Открыть меню' @click='openNotificationMenu' />
+		<div class='container d-flex justify-content-center align-items-center flex-column'>
+			<div class='row row-2 w-100'>
+				<div v-if='discordChallensList.length' class='col-lg'>
+					<div class='container discord-servers-list pt-3 px-3 my-3'>
+						<div class='d-flex align-items-center justify-content-between'>
+							<h4>
+								Подписчики в Discord
+							</h4>
+							<h5 class='total-items-amount'>
+								Всего: {{ discordChallensList.length }}
+							</h5>
+						</div>
+						<div v-for='channel in discordChallensList' :key='channel.id' class='row my-1 pt-1 discord-server'>
+							<div class='col-auto d-flex justify-content-end'>
+								<img :src='channel.iconLink' alt='icon' class='discord-server-icon'>
+							</div>
+							<div class='col discord-server-info'>
+								<div class='discord-server-name h-50 pt-1'>
+									{{ channel.name }}
+								</div>
+								<div class='discord-server-subscribe-date h-50 d-flex align-items-end pb-2'>
+									Отслеживает с {{ getFormatedDate(new Date(channel.subscribeDate)) }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div v-if='telegramUsersList.length' class='col-lg'>
+					<div class='container telegram-users-list pt-3 px-3 my-3'>
+						<div class='d-flex align-items-center justify-content-between'>
+							<h4>
+								Подписчики в Telegram
+							</h4>
+							<h5 class='total-items-amount'>
+								Всего: {{ telegramUsersList.length }}
+							</h5>
+						</div>
+						<div v-for='user in telegramUsersList' :key='user.id' class='row my-1 pt-1 telegram-user'>
+							<div class='col-auto d-flex justify-content-end'>
+								<img :src='user.avatarLink' alt='avatar' class='telegram-user-avatar'>
+							</div>
+							<div class='col telegram-user-info'>
+								<div class='telegram-user-name h-50 pt-1'>
+									{{ user.first_name }} {{ user.last_name }}
+								</div>
+								<div class='telegram-user-subscribe-date h-50 d-flex align-items-end pb-2'>
+									Отслеживает с {{ getFormatedDate(new Date(user.subscribeDate)) }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 export default {
+	layout: 'withoutHeader',
+	async asyncData({ $api }) {
+		const { users: telegramUsersList } = await $api('users')
+		const { channels: discordChallensList } = await $api('channels')
+		return { telegramUsersList, discordChallensList }
+	},
 	methods: {
 		openNotificationMenu() {
 			this.$swal({
@@ -35,7 +92,7 @@ export default {
 									<path
 										d='M78.864,0c43.556,0,78.863,35.308,78.863,78.864c0,43.552-35.308,78.868-78.863,78.868
 												C35.308,157.731,0,122.416,0,78.864C0,35.308,35.308,0,78.864,0z'
-										fill='#8C9EFF'
+										fill='#5865F2'
 									/>
 									<path
 										d='M113.101,53.34c0,0-9.76-7.635-21.284-8.514l-1.043,2.076c10.425,2.552,15.2,6.207,20.199,10.695
@@ -61,7 +118,7 @@ export default {
 								xmlns='http://www.w3.org/2000/svg'
 								class='m-2'
 							>
-								<circle cx='12' cy='12' fill='#039be5' r='12' />
+								<circle cx='12' cy='12' fill='#2A9ED6' r='12' />
 								<path
 									d='m5.491 11.74 11.57-4.461c.537-.194 1.006.131.832.943l.001-.001-1.97 9.281c-.146.658-.537.818-1.084.508l-3-2.211-1.447
 												1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953z'
@@ -99,7 +156,67 @@ export default {
 					}
 				}
 			})
+		},
+		getFormatedDate(date) {
+			return `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`
 		}
 	}
 }
 </script>
+<style scoped>
+.telegram-users-list,
+.discord-servers-list {
+	border: 1px solid #d9d9d9;
+	border-radius: 0.1875em 0 0 0.1875em;
+	width: 100%;
+	white-space: nowrap;
+	overflow: auto;
+	overflow-y: none;
+	max-height: 580px;
+}
+
+.telegram-user,
+.discord-server {
+	border-top: 1px solid #d9d9d9;
+}
+
+.telegram-user-avatar,
+.discord-server-icon {
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+}
+.telegram-user-info,
+.discord-server-info {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.telegram-user-name,
+.discord-server-name {
+	font-weight: bold;
+	font-size: 16px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.telegram-user-subscribe-date,
+.discord-server-subscribe-date {
+	color: #555;
+	font-size: 14px;
+}
+
+@media (max-width: 430px) {
+	.total-items-amount {
+		display: none;
+	}
+}
+
+@media (max-width: 991px) {
+	.telegram-users-list,
+	.discord-servers-list {
+		max-height: 435px;
+	}
+}
+</style>

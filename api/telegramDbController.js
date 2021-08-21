@@ -36,7 +36,7 @@ class TelegramDatabaseController {
 	}
 
 	async getUsers() {
-		return await users.find()
+		return await users.find({}, { sort: { subscribeDate: -1 } })
 	}
 }
 

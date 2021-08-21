@@ -1,0 +1,32 @@
+* {
+	box-sizing: border-box;
+	user-select: none;
+	text-decoration: none;
+	outline: none !important;
+	border: none;
+	-webkit-tap-highlight-color: #0000;
+}
+body {
+	width: 100vw;
+	height: 100vh;
+}
+
+.swal2-validation-message {
+	background: none !important;
+}
+
+::-webkit-scrollbar-track {
+	background-color: #ecedee;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #ccc;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: #bcbcbc;
+}
+
+::-webkit-scrollbar {
+	width: 4px;
+}

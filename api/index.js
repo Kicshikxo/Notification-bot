@@ -36,9 +36,38 @@ app.post('/broadcast', async (req, res) => {
 	}
 })
 
-app.get('/users', async (req, res) => res.json({ users: await telegramDB.getUsers() }))
+app.get('/users', async (req, res) => {
+	const users = []
 
-app.get('/channels', async (req, res) => res.json({ channels: await discordDB.getChannels() }))
+	for (const user of await telegramDB.getUsers()) {
+		const userInfo = await telegramBot.getChatMember(user.chatId, user.id)
+		const userAvatarList = await telegramBot.getUserProfilePhotos(user.id)
+		const userAvatarLink = await telegramBot.getFileLink(userAvatarList.photos[0][0].file_id)
+		users.push({
+			...userInfo.user,
+			avatarLink: userAvatarLink,
+			subscribeDate: user.subscribeDate
+		})
+	}
+
+	res.json({ users })
+})
+
+app.get('/channels', async (req, res) => {
+	const channels = []
+
+	for (const channel of await discordDB.getChannels()) {
+		const guild = await discordBot.guilds.cache.get(channel.guildId)
+		channels.push({
+			id: guild.id,
+			name: guild.name,
+			iconLink: guild.iconURL() || `/img/${((guild.id >>> 0) % 3) + 1}.png`,
+			subscribeDate: channel.subscribeDate
+		})
+	}
+
+	res.json({ channels })
+})
 
 telegramBot.onText(/\/start/, async message => {
 	await telegramBot.sendMessage(message.chat.id, 'Для подписки на рассылку введите /subscribe')
