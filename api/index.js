@@ -27,7 +27,7 @@ app.post('/dispatch', async (req, res) => {
 			telegramUsers.forEach(user => telegramBot.sendMessage(user.chatId, message))
 		}
 
-		res.json({ success: true })
+		return res.json({ success: true })
 	} catch (e) {
 		console.log(e)
 		return res.json({ success: false })
@@ -59,10 +59,3 @@ discordBot.commands.set('/unsubscribe', async message => {
 })
 
 module.exports = app
-
-if (require.main === module) {
-	const port = process.env.PORT || 3001
-	app.listen(port, () => {
-		console.log(`API server listening on port ${port}`)
-	})
-}
