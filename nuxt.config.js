@@ -42,12 +42,19 @@ export default {
 		]
 	],
 
+	pwa: {
+		manifest: {
+			name: 'Vichuxa notifications',
+			lang: 'ru'
+		}
+	},
+
 	http: {
 		baseURL: '/'
 	},
 
 	serverMiddleware: [{ path: '/api', handler: '~/api/index.js' }],
 
-	buildModules: ['@nuxtjs/eslint-module'],
+	buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/pwa'],
 	build: {}
 }

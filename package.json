@@ -16,13 +16,14 @@
 	},
 	"dependencies": {
 		"@nuxt/http": "latest",
+		"@nuxtjs/pwa": "^3.3.5",
 		"discord.js": "^13.0.0",
 		"express": "latest",
 		"monk": "^7.3.4",
 		"node-telegram-bot-api": "^0.54.0",
 		"nuxt": "latest",
-		"vue-toastification": "^1.7.11",
-		"vue-sweetalert2": "^5.0.2"
+		"vue-sweetalert2": "^5.0.2",
+		"vue-toastification": "^1.7.11"
 	},
 	"devDependencies": {
 		"@nuxtjs/eslint-config": "^5.0.0",
