@@ -17,7 +17,7 @@
 							<div class='col-auto d-flex justify-content-end'>
 								<img :src='channel.iconLink' draggable='false' alt='icon' class='discord-server-icon'>
 							</div>
-							<div class='col discord-server-info px-0'>
+							<div class='col discord-server-info'>
 								<div class='discord-server-name h-50 pt-1'>
 									{{ channel.name }}
 								</div>
@@ -43,7 +43,7 @@
 							<div class='col-auto d-flex justify-content-end'>
 								<img :src='user.avatarLink' draggable='false' alt='avatar' class='telegram-user-avatar'>
 							</div>
-							<div class='col telegram-user-info px-0'>
+							<div class='col telegram-user-info'>
 								<div class='telegram-user-name h-50 pt-1'>
 									{{ user.firstName }} {{ user.lastName }}
 								</div>
