@@ -78,13 +78,13 @@ export default {
 				showLoaderOnConfirm: true,
 				html: `
 					<div class='input-group d-flex justify-content-center'>
-						<label class='input-group-text d-flex flex-column bg-transparent'>
+						<label class='input-group-text w-50 d-flex flex-column bg-transparent'>
 							<img class='discord-image m-2'>
 							<div class='form-check form-switch'>
 								<input id='discord-checkbox' class='form-check-input' type='checkbox' checked>
 							</div>
 						</label>
-						<label class='input-group-text d-flex flex-column bg-transparent'>
+						<label class='input-group-text w-50 d-flex flex-column bg-transparent'>
 							<img class='telegram-image m-2'>
 							<div class='form-check form-switch'>
 								<input id='telegram-checkbox' class='form-check-input' type='checkbox' checked>
