@@ -88,7 +88,7 @@ export default {
 					const telegram = document.querySelector('#telegram-checkbox').checked
 
 					if (message && (discord || telegram)) {
-						const result = await this.$api('dispatch', { message, discord, telegram })
+						const result = await this.$api('broadcast', { message, discord, telegram })
 						if (result.success) {
 							this.$toast('Отправлено', { type: 'success' })
 						} else {

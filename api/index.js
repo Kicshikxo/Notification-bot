@@ -9,7 +9,7 @@ const discordBot = require('./discordBot')
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-app.post('/dispatch', async (req, res) => {
+app.post('/broadcast', async (req, res) => {
 	const { message, discord, telegram } = req.body
 
 	if (!message.trim()) {
