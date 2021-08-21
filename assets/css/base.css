@@ -15,6 +15,10 @@ body {
 	background: none !important;
 }
 
+.form-switch .form-check-input {
+	margin-left: -36px !important;
+}
+
 ::-webkit-scrollbar-track {
 	background-color: #ecedee;
 }

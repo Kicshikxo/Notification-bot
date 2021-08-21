@@ -77,7 +77,7 @@ export default {
 				confirmButtonText: 'Отправить',
 				showLoaderOnConfirm: true,
 				html: `
-					<div class='input-group d-flex justify-content-center'>
+					<div class='w-100 input-group d-flex justify-content-center'>
 						<label class='input-group-text d-flex flex-column bg-transparent'>
 							<svg
 								enable-background='new 0 0 157.728 157.731'
@@ -107,7 +107,9 @@ export default {
 									/>
 								</g>
 							</svg>
-							<input id='discord-checkbox' class='form-check-input' type='checkbox' checked>
+							<div id='discord-checkbox' class="form-check form-switch">
+								<input id='telegram-checkbox' class="form-check-input" type="checkbox" checked>
+							</div>
 						</label>
 						<label class='input-group-text d-flex flex-column bg-transparent'>
 							<svg
@@ -125,7 +127,9 @@ export default {
 									fill='#FFFFFF'
 								/>
 							</svg>
-							<input id='telegram-checkbox' class='form-check-input' type='checkbox' checked>
+							<div class="form-check form-switch">
+								<input id='telegram-checkbox' class="form-check-input" type="checkbox" checked>
+							</div>
 						</label>
 					</div>
 				`,
