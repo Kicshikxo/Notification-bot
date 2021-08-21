@@ -45,6 +45,7 @@ export default {
 	pwa: {
 		manifest: {
 			name: 'Vichuxa notifications',
+			short_name: 'VNotifications',
 			lang: 'ru'
 		}
 	},
