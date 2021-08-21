@@ -6,7 +6,7 @@ class DiscordDatabaseController {
 	async subscribe(data) {
 		const isChannelSubscribed = !!(await channels.findOne({ guildId: data.guildId }))
 		if (isChannelSubscribed) {
-			return { success: false }
+			return { success: false, error: new Error('Already subscribed') }
 		} else {
 			await channels.insert({
 				channelId: data.channelId,
@@ -20,7 +20,7 @@ class DiscordDatabaseController {
 	async unsubscribe(data) {
 		const isChannelSubscribed = !!(await channels.findOne({ guildId: data.guildId }))
 		if (!isChannelSubscribed) {
-			return { success: false }
+			return { success: false, error: new Error('Not subscribed') }
 		} else {
 			await channels.remove({ guildId: data.guildId })
 			return { success: true }

@@ -93,6 +93,7 @@ export default {
 							this.$toast('Отправлено', { type: 'success' })
 						} else {
 							this.$toast('Ошибка отправки', { type: 'error' })
+							console.error(result.error)
 						}
 						return result.success
 					}

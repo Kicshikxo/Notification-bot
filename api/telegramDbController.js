@@ -6,7 +6,7 @@ class TelegramDatabaseController {
 	async subscribe(data) {
 		const isUserSubscribed = !!(await users.findOne({ id: data.from.id }))
 		if (isUserSubscribed) {
-			return { success: false }
+			return { success: false, error: new Error('Already subscribed') }
 		} else {
 			await users.insert({
 				id: data.from.id,
@@ -20,7 +20,7 @@ class TelegramDatabaseController {
 	async unsubscribe(data) {
 		const isUserSubscribed = !!(await users.findOne({ id: data.from.id }))
 		if (!isUserSubscribed) {
-			return { success: false }
+			return { success: false, error: new Error('Not subscribed') }
 		} else {
 			await users.remove({ id: data.from.id })
 			return { success: true }

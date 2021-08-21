@@ -30,7 +30,7 @@ app.post('/dispatch', async (req, res) => {
 		return res.json({ success: true })
 	} catch (e) {
 		console.log(e)
-		return res.json({ success: false })
+		return res.json({ success: false, error: e })
 	}
 })
 
@@ -40,22 +40,28 @@ telegramBot.onText(/\/start/, async message => {
 
 telegramBot.onText(/\/subscribe/, async message => {
 	const result = await telegramDB.subscribe(message)
-	await telegramBot.sendMessage(message.chat.id, result.success ? 'Вы подписались на рассылку' : 'Вы уже подписаны на рассылку')
+	await telegramBot.sendMessage(
+		message.chat.id,
+		result.success ? 'Вы подписались на рассылку' : result.error.message === 'Already subscribed' ? 'Вы уже подписаны на рассылку' : 'Произошла незивестная ошибка'
+	)
 })
 
 telegramBot.onText(/\/unsubscribe/, async message => {
 	const result = await telegramDB.unsubscribe(message)
-	await telegramBot.sendMessage(message.chat.id, result.success ? 'Вы отписались от рассылки' : 'Вы не подписаны на рассылку')
+	await telegramBot.sendMessage(
+		message.chat.id,
+		result.success ? 'Вы отписались от рассылки' : result.error.message === 'Not subscribed' ? 'Вы не подписаны на рассылку' : 'Произошла неизвестная ошибка'
+	)
 })
 
 discordBot.commands.set('/subscribe', async message => {
 	const result = await discordDB.subscribe(message)
-	return message.reply(result.success ? 'Вы подписались на рассылку' : 'Вы уже подписаны на рассылку')
+	return message.reply(result.success ? 'Вы подписались на рассылку' : result.error.message === 'Already subscribed' ? 'Вы уже подписаны на рассылку' : 'Произошла незивестная ошибка')
 })
 
 discordBot.commands.set('/unsubscribe', async message => {
 	const result = await discordDB.unsubscribe(message)
-	return message.reply(result.success ? 'Вы отписались от рассылки' : 'Вы не подписаны на рассылку')
+	return message.reply(result.success ? 'Вы отписались от рассылки' : result.error.message === 'Not subscribed' ? 'Вы не подписаны на рассылку' : 'Произошла неизвестная ошибка')
 })
 
 module.exports = app
