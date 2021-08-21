@@ -2,10 +2,6 @@
 
 ## Installation
 
-This is a template project, click on the green button "Use this template" at the top of this page and get started with GitHub :sparkles:
-
-One you cloned your repository, install the dependencies with:
-
 ```bash
 npm install # or yarn install
 ```
