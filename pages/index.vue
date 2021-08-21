@@ -77,7 +77,7 @@ export default {
 				confirmButtonText: 'Отправить',
 				showLoaderOnConfirm: true,
 				html: `
-					<div class='input-group d-flex justify-content-center'>
+					<div class='input-group d-flex justify-content-center px-2'>
 						<label class='input-group-text w-50 d-flex flex-column bg-transparent'>
 							<img class='discord-image m-2'>
 							<div class='form-check form-switch'>
