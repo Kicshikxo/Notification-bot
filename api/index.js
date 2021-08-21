@@ -45,8 +45,8 @@ app.get('/users', async (req, res) => {
 		const userAvatarLink = await telegramBot.getFileLink(userAvatarList.photos[0][0].file_id)
 		users.push({
 			id: userInfo.user.id,
-			first_name: userInfo.user.first_name,
-			last_name: userInfo.user.last_name,
+			firstName: userInfo.user.first_name,
+			lastName: userInfo.user.last_name,
 			avatarLink: userAvatarLink,
 			subscribeDate: user.subscribeDate
 		})

@@ -45,7 +45,7 @@
 							</div>
 							<div class='col telegram-user-info'>
 								<div class='telegram-user-name h-50 pt-1'>
-									{{ user.first_name }} {{ user.last_name }}
+									{{ user.firstName }} {{ user.lastName }}
 								</div>
 								<div class='telegram-user-subscribe-date h-50 d-flex align-items-end pb-2'>
 									Отслеживает с {{ getFormatedDate(new Date(user.subscribeDate)) }}
