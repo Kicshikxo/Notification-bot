@@ -21,7 +21,7 @@
 								<div class='discord-server-name h-50 pt-1'>
 									{{ channel.name }}
 								</div>
-								<div class='discord-server-subscribe-date h-50 d-flex align-items-end mb-2' :title="new Date(channel.subscribeDate).toLocaleString('ru')">
+								<div class='discord-server-subscribe-date h-50 d-flex align-items-end pb-2' :title="new Date(channel.subscribeDate).toLocaleString('ru')">
 									Отслеживает с {{ getFormatedDate(new Date(channel.subscribeDate)) }}
 								</div>
 							</div>
@@ -47,7 +47,7 @@
 								<div class='telegram-user-name h-50 pt-1'>
 									{{ user.firstName }} {{ user.lastName }}
 								</div>
-								<div class='telegram-user-subscribe-date h-50 d-flex align-items-end mb-2' :title="new Date(user.subscribeDate).toLocaleString('ru')">
+								<div class='telegram-user-subscribe-date h-50 d-flex align-items-end pb-2' :title="new Date(user.subscribeDate).toLocaleString('ru')">
 									Отслеживает с {{ getFormatedDate(new Date(user.subscribeDate)) }}
 								</div>
 							</div>
