@@ -4,26 +4,34 @@ const channels = db.get('DiscordChannels')
 
 class DiscordDatabaseController {
 	async subscribe(data) {
-		const isChannelSubscribed = !!(await channels.findOne({ guildId: data.guildId }))
-		if (isChannelSubscribed) {
-			return { success: false, error: new Error('ALREADY_SUBSCRIBED') }
-		} else {
-			await channels.insert({
-				channelId: data.channelId,
-				guildId: data.guildId,
-				subscribeDate: new Date(data.createdTimestamp).toISOString()
-			})
-			return { success: true }
+		try {
+			const isChannelSubscribed = !!(await channels.findOne({ guildId: data.guildId }))
+			if (isChannelSubscribed) {
+				return { success: false, error: new Error('ALREADY_SUBSCRIBED') }
+			} else {
+				await channels.insert({
+					channelId: data.channelId,
+					guildId: data.guildId,
+					subscribeDate: new Date(data.createdTimestamp).toISOString()
+				})
+				return { success: true }
+			}
+		} catch (e) {
+			return { success: false, error: e }
 		}
 	}
 
 	async unsubscribe(data) {
-		const isChannelSubscribed = !!(await channels.findOne({ guildId: data.guildId }))
-		if (!isChannelSubscribed) {
-			return { success: false, error: new Error('NOT_SUBSCRIBED') }
-		} else {
-			await channels.remove({ guildId: data.guildId })
-			return { success: true }
+		try {
+			const isChannelSubscribed = !!(await channels.findOne({ guildId: data.guildId }))
+			if (!isChannelSubscribed) {
+				return { success: false, error: new Error('NOT_SUBSCRIBED') }
+			} else {
+				await channels.remove({ guildId: data.guildId })
+				return { success: true }
+			}
+		} catch (e) {
+			return { success: false, error: e }
 		}
 	}
 

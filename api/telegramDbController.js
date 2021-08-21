@@ -4,26 +4,34 @@ const users = db.get('TelegramUsers')
 
 class TelegramDatabaseController {
 	async subscribe(data) {
-		const isUserSubscribed = !!(await users.findOne({ id: data.from.id }))
-		if (isUserSubscribed) {
-			return { success: false, error: new Error('ALREADY_SUBSCRIBED') }
-		} else {
-			await users.insert({
-				id: data.from.id,
-				chatId: data.chat.id,
-				subscribeDate: new Date(data.date * 1000).toISOString()
-			})
-			return { success: true }
+		try {
+			const isUserSubscribed = !!(await users.findOne({ id: data.from.id }))
+			if (isUserSubscribed) {
+				return { success: false, error: new Error('ALREADY_SUBSCRIBED') }
+			} else {
+				await users.insert({
+					id: data.from.id,
+					chatId: data.chat.id,
+					subscribeDate: new Date(data.date * 1000).toISOString()
+				})
+				return { success: true }
+			}
+		} catch (e) {
+			return { success: false, error: e }
 		}
 	}
 
 	async unsubscribe(data) {
-		const isUserSubscribed = !!(await users.findOne({ id: data.from.id }))
-		if (!isUserSubscribed) {
-			return { success: false, error: new Error('NOT_SUBSCRIBED') }
-		} else {
-			await users.remove({ id: data.from.id })
-			return { success: true }
+		try {
+			const isUserSubscribed = !!(await users.findOne({ id: data.from.id }))
+			if (!isUserSubscribed) {
+				return { success: false, error: new Error('NOT_SUBSCRIBED') }
+			} else {
+				await users.remove({ id: data.from.id })
+				return { success: true }
+			}
+		} catch (e) {
+			return { success: false, error: e }
 		}
 	}
 

@@ -55,9 +55,9 @@ export default {
 						<label class='input-group-text d-flex flex-column bg-transparent'>
 							<svg
 								enable-background='new 0 0 24 24'
+								width='40'
 								height='40'
 								viewBox='0 0 24 24'
-								width='40'
 								xmlns='http://www.w3.org/2000/svg'
 								class='m-2'
 							>
@@ -83,12 +83,12 @@ export default {
 					}
 				},
 				allowOutsideClick: () => !this.$swal.isLoading(),
-				preConfirm: async text => {
+				preConfirm: async message => {
 					const discord = document.querySelector('#discord-checkbox').checked
 					const telegram = document.querySelector('#telegram-checkbox').checked
 
-					if (text && (discord || telegram)) {
-						const result = await this.$api('dispatch', { message: text, discord, telegram })
+					if (message && (discord || telegram)) {
+						const result = await this.$api('dispatch', { message, discord, telegram })
 						if (result.success) {
 							this.$toast('Отправлено', { type: 'success' })
 						} else {
