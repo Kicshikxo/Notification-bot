@@ -1,5 +1,3 @@
-/* jshint camelcase: false */
-
 export default {
 	target: 'server',
 	components: true,

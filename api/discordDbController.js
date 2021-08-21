@@ -2,13 +2,13 @@ const MONGO_DB_URI = process.env.MONGO_DB_URI || require('./config.json').MONGO_
 const db = require('monk')(MONGO_DB_URI)
 const channels = db.get('DiscordChannels')
 
-class DatabaseController {
+class DiscordDatabaseController {
 	async subscribe(data) {
 		const isChannelSubscribed = !!(await channels.findOne({ guildId: data.guildId }))
 		if (isChannelSubscribed) {
 			return { success: false }
 		} else {
-			channels.insert({
+			await channels.insert({
 				channelId: data.channelId,
 				guildId: data.guildId,
 				subscribeDate: new Date(data.createdTimestamp).toISOString()
@@ -22,7 +22,7 @@ class DatabaseController {
 		if (!isChannelSubscribed) {
 			return { success: false }
 		} else {
-			channels.remove({ guildId: data.guildId })
+			await channels.remove({ guildId: data.guildId })
 			return { success: true }
 		}
 	}
@@ -32,4 +32,4 @@ class DatabaseController {
 	}
 }
 
-module.exports = new DatabaseController()
+module.exports = new DiscordDatabaseController()

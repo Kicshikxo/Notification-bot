@@ -26,12 +26,12 @@ app.post('/dispatch', async (req, res) => {
 			const telegramUsers = await telegramDB.getUsers()
 			telegramUsers.forEach(user => telegramBot.sendMessage(user.chatId, message))
 		}
+
+		res.json({ success: true })
 	} catch (e) {
 		console.log(e)
 		return res.json({ success: false })
 	}
-
-	res.json({ success: true })
 })
 
 telegramBot.onText(/\/start/, async message => {

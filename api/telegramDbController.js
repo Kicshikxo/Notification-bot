@@ -2,13 +2,13 @@ const MONGO_DB_URI = process.env.MONGO_DB_URI || require('./config.json').MONGO_
 const db = require('monk')(MONGO_DB_URI)
 const users = db.get('TelegramUsers')
 
-class DatabaseController {
+class TelegramDatabaseController {
 	async subscribe(data) {
 		const isUserSubscribed = !!(await users.findOne({ id: data.from.id }))
 		if (isUserSubscribed) {
 			return { success: false }
 		} else {
-			users.insert({
+			await users.insert({
 				id: data.from.id,
 				chatId: data.chat.id,
 				subscribeDate: new Date(data.date * 1000).toISOString()
@@ -22,7 +22,7 @@ class DatabaseController {
 		if (!isUserSubscribed) {
 			return { success: false }
 		} else {
-			users.remove({ id: data.from.id })
+			await users.remove({ id: data.from.id })
 			return { success: true }
 		}
 	}
@@ -32,4 +32,4 @@ class DatabaseController {
 	}
 }
 
-module.exports = new DatabaseController()
+module.exports = new TelegramDatabaseController()
