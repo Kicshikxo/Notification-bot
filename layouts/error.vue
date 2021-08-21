@@ -7,8 +7,8 @@
 			<h2 class='info'>
 				{{ error.message }}
 			</h2>
-			<nuxt-link v-if='error.statusCode === 404' class='button' to='/'>
-				Homepage
+			<nuxt-link v-if='error.statusCode === 404' class='mt-5' to='/'>
+				На главную
 			</nuxt-link>
 		</div>
 	</section>
@@ -48,8 +48,5 @@ export default {
 	font-weight: 300;
 	color: #9aabb1;
 	margin: 0;
-}
-.button {
-	margin-top: 50px;
 }
 </style>
