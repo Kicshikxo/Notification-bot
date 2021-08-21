@@ -35,15 +35,11 @@ app.post('/dispatch', async (req, res) => {
 })
 
 app.get('/users', async (req, res) => {
-	return res.json({
-		users: await telegramDB.getUsers()
-	})
+	return res.json({ users: await telegramDB.getUsers() })
 })
 
 app.get('/channels', async (req, res) => {
-	return res.json({
-		channels: await discordDB.getChannels()
-	})
+	return res.json({ channels: await discordDB.getChannels() })
 })
 
 telegramBot.onText(/\/start/, async message => {
