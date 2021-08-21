@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Header button-text='Открыть меню' @click='openNotificationMenu' />
+		<Header button-text='Отправить уведомление' @click='openNotificationMenu' />
 		<div class='container d-flex justify-content-center align-items-center flex-column'>
 			<div class='row row-2 w-100'>
 				<div v-if='discordChallensList.length' class='col-lg'>
