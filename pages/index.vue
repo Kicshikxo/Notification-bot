@@ -72,7 +72,7 @@ export default {
 			this.$swal({
 				input: 'textarea',
 				title: 'Отправить оповещение',
-				inputPlaceholder: 'Введите текст оповещения...',
+				inputPlaceholder: 'Введите текст...',
 				confirmButtonColor: '#0D6EFD',
 				confirmButtonText: 'Отправить',
 				showLoaderOnConfirm: true,
