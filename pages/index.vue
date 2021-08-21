@@ -176,6 +176,7 @@ export default {
 	}
 	.header {
 		flex-direction: column;
+		padding-bottom: 0.5rem !important;
 	}
 }
 
