@@ -1,11 +1,4 @@
-<p align="center"><img width="328px" src="https://nuxtjs.org/logos/nuxt.svg"></p>
-
-
-# Nuxt.js with Express
-
-> [ExpressJS](http://expressjs.com/) + [Nuxt.js](https://nuxtjs.org) = :zap:
-
-Live Demo: [https://codesandbox.io/s/github/nuxt-community/express-template](https://codesandbox.io/s/github/nuxt-community/express-template)
+# Discord / Telegram notification interface
 
 ## Installation
 
@@ -14,14 +7,8 @@ This is a template project, click on the green button "Use this template" at the
 One you cloned your repository, install the dependencies with:
 
 ```bash
-yarn install # or npm install
+npm install # or yarn install
 ```
-
-## ExpressJS Changes
-
-- There is a  `api` directory with the root of your `api` server.
-- The `routes` directory is called `api/routes`.
-
 ## Commands
 
 | Command | Description |
@@ -30,20 +17,5 @@ yarn install # or npm install
 | npm run build | Build the nuxt.js web application for production. |
 | npm start | Start ExpressJS server in production. |
 
-## Examples
-
-- [Handling Protected SSR Routes](https://github.com/nuxt/express/blob/master/protected-ssr-api.md)
-
-## Documentation
-
-- [ExpressJS](http://expressjs.com/en/guide/routing.html)
-- [Nuxt.js](https://nuxtjs.org/guide/)
-- [Vue.js](http://vuejs.org/guide/)
-
-## Licenses
-
-- [ExpressJS license](https://github.com/expressjs/express/blob/master/LICENSE)
-- [NuxtJS license](https://github.com/nuxt/nuxt.js/blob/master/LICENSE.md)
-- [VueJS license](https://github.com/vuejs/vue/blob/master/LICENSE)
 
 
