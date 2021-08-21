@@ -134,7 +134,7 @@ export default {
 	width: 100%;
 	white-space: nowrap;
 	overflow: auto;
-	overflow-x: none;
+	overflow-x: hidden;
 	max-height: 569px;
 }
 
