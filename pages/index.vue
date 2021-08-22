@@ -72,12 +72,7 @@ export default {
 	methods: {
 		openNotificationMenu() {
 			this.$swal({
-				input: 'textarea',
 				title: 'Отправить оповещение',
-				inputPlaceholder: 'Введите текст...',
-				confirmButtonColor: '#0D6EFD',
-				confirmButtonText: 'Отправить',
-				showLoaderOnConfirm: true,
 				html: `
 					<div class='input-group d-flex justify-content-center px-2'>
 						<label class='input-group-text w-50 d-flex flex-column bg-transparent'>
@@ -94,6 +89,11 @@ export default {
 						</label>
 					</div>
 				`,
+				input: 'textarea',
+				inputPlaceholder: 'Введите текст...',
+				confirmButtonColor: '#0D6EFD',
+				confirmButtonText: 'Отправить',
+				showLoaderOnConfirm: true,
 				inputValidator: value => {
 					const discord = document.querySelector('#discord-checkbox').checked
 					const telegram = document.querySelector('#telegram-checkbox').checked
