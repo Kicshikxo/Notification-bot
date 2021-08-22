@@ -7,7 +7,7 @@
 					<div class='container discord-servers-list pt-3 px-3 my-3'>
 						<div class='d-flex align-items-center justify-content-between'>
 							<h4>
-								Сервера в Discord
+								Серверы в Discord
 							</h4>
 							<h5 class='total-items-amount'>
 								Всего: {{ discordServersList.length }}
