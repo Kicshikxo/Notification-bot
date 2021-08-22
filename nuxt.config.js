@@ -29,7 +29,7 @@ export default {
 		[
 			'vue-toastification/nuxt',
 			{
-				icon: false,
+				icon: true,
 				position: 'bottom-right',
 				transition: 'Vue-Toastification__fade',
 				closeButton: false,
