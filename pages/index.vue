@@ -3,27 +3,27 @@
 		<Header button-text='Открыть меню' @button-click='openNotificationMenu' />
 		<div class='container d-flex justify-content-center align-items-center flex-column'>
 			<div class='row row-2 w-100'>
-				<div v-if='discordChallensList.length' class='col-lg'>
+				<div v-if='discordServersList.length' class='col-lg'>
 					<div class='container discord-servers-list pt-3 px-3 my-3'>
 						<div class='d-flex align-items-center justify-content-between'>
 							<h4>
 								Сервера в Discord
 							</h4>
 							<h5 class='total-items-amount'>
-								Всего: {{ discordChallensList.length }}
+								Всего: {{ discordServersList.length }}
 							</h5>
 						</div>
-						<div v-for='channel in discordChallensList' :key='channel.id' class='row my-1 pt-1 discord-server'>
+						<div v-for='server in discordServersList' :key='server.id' class='row my-1 pt-1 discord-server'>
 							<div class='col-auto d-flex justify-content-end'>
-								<img :src='channel.iconLink' draggable='false' alt='icon' class='discord-server-icon'>
+								<img :src='server.iconLink' draggable='false' alt='icon' class='discord-server-icon'>
 							</div>
 							<div class='col discord-server-info px-0'>
 								<div class='discord-server-name h-50 pt-1'>
-									{{ channel.name }}
+									{{ server.name }}
 								</div>
 								<div class='discord-server-subscribe-date h-50 d-flex align-items-end pb-2'>
 									Отслеживает с&nbsp;
-									<span :title="new Date(channel.subscribeDate).toLocaleString('ru', { timeZone: 'Europe/Moscow' })">{{ getFormatedDate(new Date(channel.subscribeDate)) }}</span>
+									<span :title="new Date(server.subscribeDate).toLocaleString('ru', { timeZone: 'Europe/Moscow' })">{{ getFormatedDate(new Date(server.subscribeDate)) }}</span>
 								</div>
 							</div>
 						</div>
@@ -66,8 +66,8 @@ export default {
 	layout: 'withoutHeader',
 	async asyncData({ $api }) {
 		const { users: telegramUsersList } = await $api('users')
-		const { channels: discordChallensList } = await $api('channels')
-		return { telegramUsersList, discordChallensList }
+		const { servers: discordServersList } = await $api('servers')
+		return { telegramUsersList, discordServersList }
 	},
 	methods: {
 		openNotificationMenu() {

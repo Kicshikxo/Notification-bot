@@ -55,15 +55,15 @@ app.get('/users', async (req, res) => {
 	res.json({ users })
 })
 
-app.get('/channels', async (req, res) => {
-	const channels = []
+app.get('/servers', async (req, res) => {
+	const servers = []
 
 	for (const channel of await discordDB.getChannels()) {
 		const guild = await discordBot.guilds.cache.get(channel.guildId)
 		if (!guild) {
 			await discordDB.forceUnsubscribe(channel.guildId)
 		} else {
-			channels.push({
+			servers.push({
 				id: guild.id,
 				name: guild.name,
 				iconLink: guild.iconURL() || `/img/${((guild.id >>> 0) % 3) + 1}.png`,
@@ -72,7 +72,7 @@ app.get('/channels', async (req, res) => {
 		}
 	}
 
-	res.json({ channels })
+	res.json({ servers })
 })
 
 telegramBot.onText(/\/start/, async message => {
