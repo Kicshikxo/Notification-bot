@@ -32,47 +32,55 @@ app.post('/broadcast', async (req, res) => {
 		return res.json({ success: true })
 	} catch (e) {
 		console.error(e)
-		return res.json({ success: false, error: e })
+		return res.json({ success: false, error: e.toString() })
 	}
 })
 
 app.get('/users', async (req, res) => {
-	const users = []
+	try {
+		const users = []
 
-	for (const user of await telegramDB.getUsers()) {
-		const userInfo = await telegramBot.getChatMember(user.chatId, user.id)
-		const userAvatarList = await telegramBot.getUserProfilePhotos(user.id)
-		const userAvatarLink = await telegramBot.getFileLink(userAvatarList.photos[0][0].file_id)
-		users.push({
-			id: userInfo.user.id,
-			firstName: userInfo.user.first_name,
-			lastName: userInfo.user.last_name,
-			avatarLink: userAvatarLink,
-			subscribeDate: user.subscribeDate
-		})
+		for (const user of await telegramDB.getUsers()) {
+			const userInfo = await telegramBot.getChatMember(user.chatId, user.id)
+			const userAvatarList = await telegramBot.getUserProfilePhotos(user.id)
+			const userAvatarLink = await telegramBot.getFileLink(userAvatarList.photos[0][0].file_id)
+			users.push({
+				id: userInfo.user.id,
+				firstName: userInfo.user.first_name,
+				lastName: userInfo.user.last_name,
+				avatarLink: userAvatarLink,
+				subscribeDate: user.subscribeDate
+			})
+		}
+
+		return res.json({ success: true, users })
+	} catch (e) {
+		return res.json({ success: false, error: e.toString() })
 	}
-
-	res.json({ success: true, users })
 })
 
 app.get('/servers', async (req, res) => {
-	const servers = []
+	try {
+		const servers = []
 
-	for (const channel of await discordDB.getChannels()) {
-		const guild = await discordBot.guilds.cache.get(channel.guildId)
-		if (!guild) {
-			await discordDB.forceUnsubscribe(channel.guildId)
-		} else {
-			servers.push({
-				id: guild.id,
-				name: guild.name,
-				iconLink: guild.iconURL() || `/img/${((guild.id >>> 0) % 3) + 1}.png`,
-				subscribeDate: channel.subscribeDate
-			})
+		for (const channel of await discordDB.getChannels()) {
+			const guild = await discordBot.guilds.cache.get(channel.guildId)
+			if (!guild) {
+				await discordDB.forceUnsubscribe(channel.guildId)
+			} else {
+				servers.push({
+					id: guild.id,
+					name: guild.name,
+					iconLink: guild.iconURL() || `/img/${((guild.id >>> 0) % 3) + 1}.png`,
+					subscribeDate: channel.subscribeDate
+				})
+			}
 		}
-	}
 
-	res.json({ success: true, servers })
+		return res.json({ success: true, servers })
+	} catch (e) {
+		return res.json({ success: false, error: e.toString() })
+	}
 })
 
 telegramBot.onText(/\/start/, async message => {

@@ -41,7 +41,7 @@ class TelegramDatabaseController {
 			return { success: true }
 		} catch (e) {
 			console.error(e)
-			return { success: false }
+			return { success: false, error: e }
 		}
 	}
 
