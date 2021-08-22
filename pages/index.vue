@@ -65,8 +65,18 @@
 export default {
 	layout: 'withoutHeader',
 	async asyncData({ $api }) {
-		const { users: telegramUsersList } = await $api('users')
-		const { servers: discordServersList } = await $api('servers')
+		const telegramData = await $api('telegram/users')
+		const discordData = await $api('discord/servers')
+
+		if (!telegramData.success) {
+			console.error(telegramData.error)
+		} else if (!discordData.success) {
+			console.error(discordData.error)
+		}
+
+		const telegramUsersList = telegramData.users || []
+		const discordServersList = discordData.servers || []
+
 		return { telegramUsersList, discordServersList }
 	},
 	methods: {

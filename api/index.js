@@ -36,7 +36,7 @@ app.post('/broadcast', async (req, res) => {
 	}
 })
 
-app.get('/users', async (req, res) => {
+app.get('/telegram/users', async (req, res) => {
 	try {
 		const users = []
 
@@ -60,7 +60,7 @@ app.get('/users', async (req, res) => {
 	}
 })
 
-app.get('/servers', async (req, res) => {
+app.get('/discord/servers', async (req, res) => {
 	try {
 		const servers = []
 
