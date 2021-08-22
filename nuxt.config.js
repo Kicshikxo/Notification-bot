@@ -29,13 +29,13 @@ export default {
 		[
 			'vue-toastification/nuxt',
 			{
-				icon: true,
+				icon: false,
 				position: 'bottom-right',
 				transition: 'Vue-Toastification__fade',
 				closeButton: false,
 				draggablePercent: 0.35,
-				transitionDuration: 500,
-				maxToasts: 10,
+				transitionDuration: 750,
+				maxToasts: 5,
 				timeout: 1500,
 				newestOnTop: false
 			}
