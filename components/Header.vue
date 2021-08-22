@@ -4,7 +4,7 @@
 			Панель уведомлений
 		</h3>
 		<nav class='my-md-0 mr-md-3'>
-			<button v-if='buttonText' class='btn btn-primary mt-1' @click="$emit('click')">
+			<button v-if='buttonText' class='btn btn-primary mt-1' @click="$emit('button-click')">
 				{{ buttonText }}
 			</button>
 		</nav>
@@ -18,6 +18,7 @@ export default {
 			required: false,
 			default: ''
 		}
-	}
+	},
+	emits: ['button-click']
 }
 </script>
