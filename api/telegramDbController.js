@@ -17,6 +17,7 @@ class TelegramDatabaseController {
 				return { success: true }
 			}
 		} catch (e) {
+			console.error(e)
 			return { success: false, error: e }
 		}
 	}
@@ -31,6 +32,7 @@ class TelegramDatabaseController {
 				return { success: true }
 			}
 		} catch (e) {
+			console.error(e)
 			return { success: false, error: e }
 		}
 	}

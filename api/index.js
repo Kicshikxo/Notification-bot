@@ -55,6 +55,7 @@ app.get('/users', async (req, res) => {
 
 		return res.json({ success: true, users })
 	} catch (e) {
+		console.error(e)
 		return res.json({ success: false, error: e.toString() })
 	}
 })
@@ -79,6 +80,7 @@ app.get('/servers', async (req, res) => {
 
 		return res.json({ success: true, servers })
 	} catch (e) {
+		console.error(e)
 		return res.json({ success: false, error: e.toString() })
 	}
 })
