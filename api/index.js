@@ -52,7 +52,7 @@ app.get('/users', async (req, res) => {
 		})
 	}
 
-	res.json({ users })
+	res.json({ success: true, users })
 })
 
 app.get('/servers', async (req, res) => {
@@ -72,7 +72,7 @@ app.get('/servers', async (req, res) => {
 		}
 	}
 
-	res.json({ servers })
+	res.json({ success: true, servers })
 })
 
 telegramBot.onText(/\/start/, async message => {
