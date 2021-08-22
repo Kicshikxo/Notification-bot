@@ -39,6 +39,7 @@ app.post('/broadcast', async (req, res) => {
 app.get('/users', async (req, res) => {
 	try {
 		const users = []
+		// users = []
 
 		for (const user of await telegramDB.getUsers()) {
 			const userInfo = await telegramBot.getChatMember(user.chatId, user.id)
