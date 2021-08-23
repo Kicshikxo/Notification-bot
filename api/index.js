@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 
 const telegramDB = require('./telegramDbController')
 const discordDB = require('./discordDbController')
 const telegramBot = require('./telegramBot')
 const discordBot = require('./discordBot')
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 

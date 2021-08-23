@@ -17,6 +17,7 @@
 	"dependencies": {
 		"@nuxt/http": "latest",
 		"@nuxtjs/pwa": "^3.3.5",
+		"cors": "^2.8.5",
 		"discord.js": "^13.0.0",
 		"express": "latest",
 		"monk": "^7.3.4",
