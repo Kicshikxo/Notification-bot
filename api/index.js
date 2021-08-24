@@ -24,7 +24,7 @@ app.post('/broadcast', async (req, res) => {
 		if (discord) {
 			discordBot.lastMessages = []
 			const discordChannels = await discordDB.getChannels()
-			discordChannels.forEach(async channel => discordBot.lastMessages.push(await discordBot.channels.cache.get(channel.guildId).send(message)))
+			discordChannels.forEach(async channel => discordBot.lastMessages.push(await discordBot.channels.cache.get(channel.channelId).send(message)))
 		}
 
 		if (telegram) {
