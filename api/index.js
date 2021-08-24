@@ -48,7 +48,10 @@ app.post('/deleteLastMessages', async (req, res) => {
 	}
 
 	if (!telegramBot.lastMessages?.length && !discordBot.lastMessages?.length) {
-		return res.json({ success: true, hasLastMessages: false })
+		return res.json({
+			success: true,
+			hasLastMessages: false
+		})
 	}
 
 	try {
