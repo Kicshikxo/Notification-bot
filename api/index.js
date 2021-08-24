@@ -47,13 +47,6 @@ app.post('/deleteLastMessages', async (req, res) => {
 		return res.json({ success: false, error: 'NO_DELETING_TARGETS_SPECIFIED' })
 	}
 
-	if (!telegramBot.lastMessages?.length && !discordBot.lastMessages?.length) {
-		return res.json({
-			success: true,
-			hasLastMessages: false
-		})
-	}
-
 	try {
 		if (discord && discordBot.lastMessages?.length) {
 			discordBot.lastMessages.forEach(message => message.delete())

@@ -10,7 +10,7 @@ module.exports = {
 	rules: {
 		indent: ['error', 'tab'],
 		quotes: ['error', 'single', { avoidEscape: true }],
-		'max-len': ['error', { code: 200 }],
+		'max-len': ['error', { code: 256 }],
 		'no-console': 'off',
 		'no-tabs': 'off',
 		'space-before-function-paren': 'off',

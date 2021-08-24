@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Header :danger-button-text="hasLastMessages && 'Меню удаления'" primary-button-text='Меню оповещений' @danger-button-click='openDeleteMenu' @primary-button-click='openNotificationMenu' />
+		<Header :danger-button-text="hasLastMessages ? 'Меню удаления' : null" primary-button-text='Меню оповещений' @danger-button-click='openDeleteMenu' @primary-button-click='openNotificationMenu' />
 		<div class='container d-flex justify-content-center align-items-center flex-column'>
 			<div class='row row-2 w-100'>
 				<div v-if='discordServersList.length' class='col-lg'>
