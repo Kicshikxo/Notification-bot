@@ -44,7 +44,8 @@ app.get('/telegram/users', async (req, res) => {
 
 		for (const user of await telegramDB.getUsers()) {
 			const userInfo = await telegramBot.getChatMember(user.chatId, user.id)
-			const userAvatarList = await telegramBot.getUserProfilePhotos(user.id)
+			const userAvatarList = await telegramBot.getUserProfilePhotos(user.id)\
+			console.log(userAvatarList)
 			const userAvatarLink = await telegramBot.getFileLink((userAvatarList.photos || [])[0][0].file_id)
 			users.push({
 				id: userInfo.user.id,
