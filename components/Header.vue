@@ -4,8 +4,11 @@
 			Панель уведомлений
 		</h3>
 		<nav class='my-md-0 mr-md-3'>
-			<button v-if='buttonText' class='btn btn-primary mt-1' @click="$emit('button-click')">
-				{{ buttonText }}
+			<button v-if='dangerButtonText' class='btn btn-danger mt-1' @click="$emit('danger-button-click')">
+				{{ dangerButtonText }}
+			</button>
+			<button v-if='primaryButtonText' class='btn btn-primary mt-1' @click="$emit('primary-button-click')">
+				{{ primaryButtonText }}
 			</button>
 		</nav>
 	</div>
@@ -13,12 +16,17 @@
 <script>
 export default {
 	props: {
-		buttonText: {
+		dangerButtonText: {
+			type: String,
+			required: false,
+			default: ''
+		},
+		primaryButtonText: {
 			type: String,
 			required: false,
 			default: ''
 		}
 	},
-	emits: ['button-click']
+	emits: ['danger-button-click', 'primary-button-click']
 }
 </script>

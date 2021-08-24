@@ -40,6 +40,40 @@ app.post('/broadcast', async (req, res) => {
 	}
 })
 
+app.post('/deleteLastMessages', async (req, res) => {
+	const { discord, telegram } = req.body
+
+	if (!discord && !telegram) {
+		return res.json({ success: false, error: 'NO_DELETING_TARGETS_SPECIFIED' })
+	}
+
+	if (!telegramBot.lastMessages?.length && !discordBot.lastMessages?.length) {
+		return res.json({ success: true, hasLastMessages: false })
+	}
+
+	try {
+		if (discord && discordBot.lastMessages?.length) {
+			discordBot.lastMessages.forEach(message => message.delete())
+			discordBot.lastMessages = []
+		}
+
+		if (telegram && telegramBot.lastMessages?.length) {
+			telegramBot.lastMessages.forEach(message => telegramBot.deleteMessage(message.chat.id, message.message_id))
+			telegramBot.lastMessages = []
+		}
+
+		return res.json({
+			success: true,
+			hasLastMessages: !!telegramBot.lastMessages?.length || !!discordBot.lastMessages?.length
+		})
+	} catch (e) {
+		return res.json({
+			success: false,
+			error: e.toString()
+		})
+	}
+})
+
 app.get('/telegram/deleteLastMessage', async (req, res) => {
 	if (!telegramBot.lastMessages?.length) {
 		return res.json({
@@ -101,7 +135,7 @@ app.get('/telegram/users', async (req, res) => {
 			})
 		}
 
-		return res.json({ success: true, users })
+		return res.json({ success: true, users, hasLastMessages: !!telegramBot.lastMessages?.length })
 	} catch (e) {
 		console.error(e)
 		return res.json({ success: false, error: e.toString() })
@@ -126,7 +160,7 @@ app.get('/discord/servers', async (req, res) => {
 			}
 		}
 
-		return res.json({ success: true, servers })
+		return res.json({ success: true, servers, hasLastMessages: !!discordBot.lastMessages?.length })
 	} catch (e) {
 		console.error(e)
 		return res.json({ success: false, error: e.toString() })

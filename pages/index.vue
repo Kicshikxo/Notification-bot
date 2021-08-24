@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Header button-text='Открыть меню' @button-click='openNotificationMenu' />
+		<Header :danger-button-text="hasLastMessages && 'Меню удаления'" primary-button-text='Меню оповещений' @danger-button-click='openDeleteMenu' @primary-button-click='openNotificationMenu' />
 		<div class='container d-flex justify-content-center align-items-center flex-column'>
 			<div class='row row-2 w-100'>
 				<div v-if='discordServersList.length' class='col-lg'>
@@ -77,9 +77,52 @@ export default {
 		const telegramUsersList = telegramData.users || []
 		const discordServersList = discordData.servers || []
 
-		return { telegramUsersList, discordServersList }
+		return { hasLastMessages: telegramData.hasLastMessages || discordData.hasLastMessages, telegramUsersList, discordServersList }
 	},
 	methods: {
+		openDeleteMenu() {
+			this.$swal({
+				title: 'Удалить последнее сообщение',
+				html: `
+					<div class='input-group d-flex justify-content-center px-2'>
+						<label class='input-group-text w-50 d-flex flex-column bg-transparent'>
+							<img class='discord-image m-2'>
+							<div class='form-check form-switch'>
+								<input id='discord-checkbox' class='form-check-input' type='checkbox' checked>
+							</div>
+						</label>
+						<label class='input-group-text w-50 d-flex flex-column bg-transparent'>
+							<img class='telegram-image m-2'>
+							<div class='form-check form-switch'>
+								<input id='telegram-checkbox' class='form-check-input' type='checkbox' checked>
+							</div>
+						</label>
+					</div>
+				`,
+				confirmButtonColor: '#dc3545',
+				confirmButtonText: 'Удалить',
+				showLoaderOnConfirm: true,
+				allowOutsideClick: () => !this.$swal.isLoading(),
+				preConfirm: async () => {
+					const discord = document.querySelector('#discord-checkbox').checked
+					const telegram = document.querySelector('#telegram-checkbox').checked
+
+					if (discord || telegram) {
+						const result = await this.$api('deleteLastMessages', { discord, telegram })
+						if (result.success) {
+							this.$toast('Последнее сообщение удалено', { type: 'success' })
+							this.hasLastMessages = result.hasLastMessages
+						} else {
+							this.$toast('Ошибка удаления последнего сообщения', { type: 'error' })
+							console.error(result.error)
+						}
+						return result.success
+					} else {
+						return false
+					}
+				}
+			})
+		},
 		openNotificationMenu() {
 			this.$swal({
 				title: 'Отправить оповещение',
@@ -123,6 +166,7 @@ export default {
 						const result = await this.$api('broadcast', { message, discord, telegram })
 						if (result.success) {
 							this.$toast('Отправлено', { type: 'success' })
+							this.hasLastMessages = true
 						} else {
 							this.$toast('Ошибка отправки', { type: 'error' })
 							console.error(result.error)
