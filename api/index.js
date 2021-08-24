@@ -22,19 +22,65 @@ app.post('/broadcast', async (req, res) => {
 
 	try {
 		if (discord) {
+			discordBot.lastMessages = []
 			const discordChannels = await discordDB.getChannels()
-			discordChannels.forEach(channel => discordBot.channels.cache.get(channel.channelId).send(message))
+			discordChannels.forEach(async channel => discordBot.lastMessages.push(await discordBot.channels.cache.get(channel.guildId).send(message)))
 		}
 
 		if (telegram) {
+			telegramBot.lastMessages = []
 			const telegramUsers = await telegramDB.getUsers()
-			telegramUsers.forEach(user => telegramBot.sendMessage(user.chatId, message))
+			telegramUsers.forEach(async user => telegramBot.lastMessages.push(await telegramBot.sendMessage(user.id, message)))
 		}
 
-		return res.json({ success: true })
+		return res.json({ success: true, mesages: telegramBot.lastMessages })
 	} catch (e) {
 		console.error(e)
 		return res.json({ success: false, error: e.toString() })
+	}
+})
+
+app.get('/telegram/deleteLastMessage', async (req, res) => {
+	if (!telegramBot.lastMessages?.length) {
+		return res.json({
+			success: false,
+			error: 'NO_LAST_MESSAGES'
+		})
+	}
+
+	try {
+		telegramBot.lastMessages.forEach(message => telegramBot.deleteMessage(message.chat.id, message.message_id))
+		telegramBot.lastMessages = []
+		return res.json({
+			success: true
+		})
+	} catch (e) {
+		return res.json({
+			success: false,
+			error: e.toString()
+		})
+	}
+})
+
+app.get('/discord/deleteLastMessage', async (req, res) => {
+	if (!discordBot.lastMessages?.length) {
+		return res.json({
+			success: false,
+			error: 'NO_LAST_MESSAGES'
+		})
+	}
+
+	try {
+		discordBot.lastMessages.forEach(message => message.delete())
+		discordBot.lastMessages = []
+		return res.json({
+			success: true
+		})
+	} catch (e) {
+		return res.json({
+			success: false,
+			error: e.toString()
+		})
 	}
 })
 
@@ -45,12 +91,12 @@ app.get('/telegram/users', async (req, res) => {
 		for (const user of await telegramDB.getUsers()) {
 			const userInfo = await telegramBot.getChatMember(user.chatId, user.id)
 			const userAvatarList = await telegramBot.getUserProfilePhotos(user.id)
-			const userAvatarLink = userAvatarList.total_count && await telegramBot.getFileLink(userAvatarList.photos[0][0].file_id)
+			const userAvatarLink = userAvatarList.total_count && (await telegramBot.getFileLink(userAvatarList.photos[0][0].file_id))
 			users.push({
 				id: userInfo.user.id,
 				firstName: userInfo.user.first_name,
 				lastName: userInfo.user.last_name,
-				avatarLink: userAvatarLink || `/img/telegram.svg`,
+				avatarLink: userAvatarLink || '/img/telegram.svg',
 				subscribeDate: user.subscribeDate
 			})
 		}
