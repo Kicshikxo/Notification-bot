@@ -33,7 +33,7 @@ app.post('/broadcast', async (req, res) => {
 			telegramUsers.forEach(async user => telegramBot.lastMessages.push(await telegramBot.sendMessage(user.id, message)))
 		}
 
-		return res.json({ success: true, mesages: telegramBot.lastMessages })
+		return res.json({ success: true })
 	} catch (e) {
 		console.error(e)
 		return res.json({ success: false, error: e.toString() })
