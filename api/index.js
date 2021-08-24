@@ -51,7 +51,7 @@ app.get('/telegram/users', async (req, res) => {
 				id: userInfo.user.id,
 				firstName: userInfo.user.first_name,
 				lastName: userInfo.user.last_name,
-				avatarLink: userAvatarLink,
+				avatarLink: userAvatarLink || `/img/telegram.svg`,
 				subscribeDate: user.subscribeDate
 			})
 		}
