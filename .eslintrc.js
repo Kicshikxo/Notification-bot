@@ -31,5 +31,8 @@ module.exports = {
 				ignores: []
 			}
 		]
+	},
+	parserOptions: {
+		ecmaVersion: 8
 	}
 }

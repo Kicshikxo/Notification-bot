@@ -126,7 +126,7 @@ app.get('/telegram/users', async (req, res) => {
 				id: userInfo.user.id,
 				firstName: userInfo.user.first_name,
 				lastName: userInfo.user.last_name,
-				avatarLink: userAvatarLink || '/img/telegram.svg',
+				avatarLink: userAvatarLink || `https://avatars.dicebear.com/api/initials/${userInfo.user.first_name}${userInfo.user.last_name ? ` ${userInfo.user.last_name}` : ''}.svg`,
 				subscribeDate: user.subscribeDate
 			})
 		}
@@ -144,9 +144,7 @@ app.get('/discord/servers', async (req, res) => {
 
 		for (const channel of await discordDB.getChannels()) {
 			const guild = await discordBot.guilds.cache.get(channel.guildId)
-			if (!guild) {
-				await discordDB.forceUnsubscribe(channel.guildId)
-			} else {
+			if (guild) {
 				servers.push({
 					id: guild.id,
 					name: guild.name,

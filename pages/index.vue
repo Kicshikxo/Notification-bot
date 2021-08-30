@@ -13,6 +13,7 @@
 								Всего: {{ discordServersList.length }}
 							</h5>
 						</div>
+
 						<div v-for='server in discordServersList' :key='server.id' class='row my-1 pt-1 discord-server'>
 							<div class='col-auto d-flex justify-content-end'>
 								<img :src='server.iconLink' draggable='false' alt='icon' class='discord-server-icon'>
@@ -40,6 +41,7 @@
 								Всего: {{ telegramUsersList.length }}
 							</h5>
 						</div>
+
 						<div v-for='user in telegramUsersList' :key='user.id' class='row my-1 pt-1 telegram-user'>
 							<div class='col-auto d-flex justify-content-end'>
 								<img :src='user.avatarLink' draggable='false' alt='avatar' class='telegram-user-avatar'>
