@@ -3,8 +3,8 @@
 		<h3 class='my-0 mr-md-auto'>
 			Панель уведомлений
 		</h3>
-		<nav class='my-md-0 mr-md-3'>
-			<button v-if='dangerButtonText' class='btn btn-danger mt-1' @click="$emit('danger-button-click')">
+		<nav class='my-md-0 mr-md-3 d-flex'>
+			<button v-if='dangerButtonText' class='btn btn-danger mt-1 me-1' @click="$emit('danger-button-click')">
 				{{ dangerButtonText }}
 			</button>
 			<button v-if='primaryButtonText' class='btn btn-primary mt-1' @click="$emit('primary-button-click')">
