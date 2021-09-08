@@ -81,6 +81,14 @@ export default {
 
 		return { hasLastMessages: telegramData.hasLastMessages || discordData.hasLastMessages, telegramUsersList, discordServersList }
 	},
+	data: () => ({
+		savedDiscordText: '',
+		savedTelegramText: ''
+	}),
+	mounted() {
+		this.savedDiscordText = localStorage.getItem('discordText') || ''
+		this.savedTelegramText = localStorage.getItem('telegramText') || ''
+	},
 	methods: {
 		openDeleteMenu() {
 			this.$swal({
@@ -143,32 +151,51 @@ export default {
 							</div>
 						</label>
 					</div>
+					<div class='input-group px-2 pb-2 mt-3'>
+						<textarea id='discord-text'  class='form-control pb-3' placeholder='Текст для discord...'>${this.savedDiscordText}</textarea>
+						<textarea id='telegram-text' class='form-control pb-3' placeholder='Текст для telegram...'>${this.savedTelegramText}</textarea>
+					</div>
 				`,
 				input: 'textarea',
-				inputPlaceholder: 'Введите текст...',
 				confirmButtonColor: '#0D6EFD',
 				confirmButtonText: 'Отправить',
 				showLoaderOnConfirm: true,
-				inputValidator: value => {
+				inputValidator: () => {
 					const discord = document.querySelector('#discord-checkbox').checked
 					const telegram = document.querySelector('#telegram-checkbox').checked
+					const discordText = document.querySelector('#discord-text').value
+					const telegramText = document.querySelector('#telegram-text').value
 
 					if (!discord && !telegram) {
-						return 'Не указана цель оповещения'
-					} else if (!value.trim()) {
-						return 'Текст оповещения не может быть пустым'
+						return 'Не указана ни одна цель оповещения'
+					} else if (!discordText && !telegramText) {
+						return 'Не указан ни один текст оповещения'
+					} else if (discord && !discordText) {
+						return 'Не указан текст для discord'
+					} else if (telegram && !telegramText) {
+						return 'Не указан текст для telegram'
 					}
 				},
 				allowOutsideClick: () => !this.$swal.isLoading(),
 				preConfirm: async message => {
 					const discord = document.querySelector('#discord-checkbox').checked
 					const telegram = document.querySelector('#telegram-checkbox').checked
+					const discordText = document.querySelector('#discord-text').value
+					const telegramText = document.querySelector('#telegram-text').value
 
-					if (message && (discord || telegram)) {
-						const result = await this.$api('broadcast', { message, discord, telegram })
+					if ((discord && discordText) || (telegram && telegramText)) {
+						const result = await this.$api('broadcast', { messages: { discord: discordText, telegram: telegramText }, discord, telegram })
 						if (result.success) {
 							this.$toast('Отправлено', { type: 'success' })
 							this.hasLastMessages = true
+							if (discord) {
+								this.savedDiscordText = discordText
+								localStorage.setItem('discordText', discordText)
+							}
+							if (telegram) {
+								this.savedTelegramText = telegramText
+								localStorage.setItem('telegramText', telegramText)
+							}
 						} else {
 							this.$toast('Ошибка отправки', { type: 'error' })
 							console.error(result.error)

@@ -57,3 +57,7 @@ img.telegram-image {
 		border-radius: 8px;
 	}
 }
+
+.swal2-textarea {
+	display: none !important;
+}
