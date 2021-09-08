@@ -268,7 +268,7 @@ export default {
 @media (max-width: 991px) {
 	.telegram-users-list,
 	.discord-servers-list {
-		max-height: 420px;
+		max-height: 421px;
 	}
 }
 </style>
